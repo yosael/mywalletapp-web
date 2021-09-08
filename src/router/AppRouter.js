@@ -4,6 +4,7 @@ import Accounts from "../components/accounts/Accounts";
 import Dashboard from "../components/dashboard/Dashboard";
 import Incomes from "../components/transactions/Incomes";
 import Expenses from "../components/transactions/Expenses";
+import Navbar from "../template/Navbar";
 
 const AppRouter = () => {
   return (
@@ -25,6 +26,7 @@ const AppRouter = () => {
 
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
+        <Navbar />
         <Switch>
           <Route path="/dashboard">
             <Dashboard />
