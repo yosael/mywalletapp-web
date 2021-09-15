@@ -1,0 +1,18 @@
+
+.pageHead__container{
+    display: flex;
+    justify-content: center;
+}
+
+.pageHead__container__arrow{
+    cursor: pointer;
+}
+
+.pageHead__container__title{
+    text-align: center;
+}
+
+.pageHead__container__title__h{
+    padding: 3px;
+    margin: 1px;
+}

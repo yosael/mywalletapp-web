@@ -3,6 +3,8 @@ import {Formik} from 'formik';
 import '../../styles/FormValidation.css';
 import { FormContainer } from '../../template/FormContainer';
 import { Button, Form } from 'react-bootstrap';
+import { ArrowRightCircle } from 'react-bootstrap-icons';
+
 
 const AccountForm = () => {
 
@@ -13,7 +15,8 @@ const AccountForm = () => {
             <Formik 
                 initialValues={{
                     accountName: "",
-                    category: ""
+                    type: "",
+                    currency: "USD"
                 }}
                 onSubmit={(values, {resetForm})=>{
                     resetForm();
@@ -34,8 +37,8 @@ const AccountForm = () => {
                     }
 
                     // validate category
-                    if(!valuesToValidate.category){
-                        errors.category ="Please type category";
+                    if(!valuesToValidate.type){
+                        errors.type ="Please enter the type";
                     }
 
                     //validate email example
@@ -64,20 +67,37 @@ const AccountForm = () => {
                             />
                             {touched.accountName && errors.accountName && <small id="accountNameMessage" class="form-text text-danger">{errors.accountName}</small>}
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formCategory">
-                            <Form.Label>Category</Form.Label>
+                        <Form.Group className="mb-3" controlId="formType">
+                            <Form.Label>Type</Form.Label>
                             <Form.Control 
-                                id="category"
-                                name="category"
+                                id="type"
+                                name="type"
                                 type="text" 
-                                placeholder="Category" 
-                                value={values.category}
+                                placeholder="Type" 
+                                value={values.type}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                             />
-                            {touched.category && errors.category && <small class="form-text text-danger">{errors.category}</small>}
+                            {touched.type && errors.type && <small class="form-text text-danger">{errors.type}</small>}
                         </Form.Group>
-                        <Button type="submit" variant="primary">Save</Button>
+                        <Form.Group className="mb-3" controlId="formCurrency">
+                            <Form.Label>Currency</Form.Label>
+                            <Form.Control 
+                                id="currency"
+                                name="currency"
+                                type="text" 
+                                placeholder="currency" 
+                                readOnly
+                                value={values.currency}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            />
+                            {touched.currency && errors.currency && <small class="form-text text-danger">{errors.currency}</small>}
+                        </Form.Group>
+                        <Button type="submit" variant="primary" >Save
+                            <ArrowRightCircle style={{marginLeft:'3px'}} size={20} />
+                        </Button>
+                        
                         {formSent && <p>Form was succesfully sent</p>}
                     </Form>
                 )}

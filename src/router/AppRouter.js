@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Account from "../pages/accounts/Account";
+import AccountPageList from "../pages/accounts/AccountPageList";
+import AccountPage from "../pages/accounts/AccountPage";
 import Dashboard from "../components/dashboard/Dashboard";
 import Incomes from "../components/transactions/Incomes";
 import Expenses from "../components/transactions/Expenses";
@@ -32,7 +33,10 @@ const AppRouter = () => {
             <Dashboard />
           </Route>
           <Route path="/accounts">
-            <Account />
+            <AccountPageList />
+          </Route>
+          <Route path="/account">
+            <AccountPage />
           </Route>
           <Route path="/incomes">
             <Incomes />

@@ -9,9 +9,6 @@ import PageOptionsBar from '../../template/PageOptionsBar'
 const Account = () => {
     return (
         <PageContainer pageName="Account Form">
-            <PageOptionsBar>
-            <Button variant="secondary">New Account</Button>
-            </PageOptionsBar>
             <PageBody>
                 <AccountForm />
             </PageBody>
