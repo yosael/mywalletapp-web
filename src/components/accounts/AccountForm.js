@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Formik} from 'formik';
 import '../../styles/FormValidation.css';
 import { FormContainer } from '../../template/FormContainer';
+import { Button, Form } from 'react-bootstrap';
 
 const AccountForm = () => {
 
@@ -48,11 +49,10 @@ const AccountForm = () => {
                 }}
              >
                 {({handleSubmit, values, handleChange, errors, handleBlur,touched}) => (
-                    <form onSubmit={handleSubmit} >
-                        <div className="form-group">
-                            <label htmlFor="accountName" >Account Name</label>
-                            <input 
-                                className="form-control"
+                    <Form onSubmit={handleSubmit} >
+                        <Form.Group className="mb-3" controlId="formAccountName" >
+                            <Form.Label>Account Name</Form.Label>
+                            <Form.Control 
                                 id="accountName"
                                 name="accountName"
                                 type="text" 
@@ -63,11 +63,10 @@ const AccountForm = () => {
                                 onBlur={handleBlur}
                             />
                             {touched.accountName && errors.accountName && <small id="accountNameMessage" class="form-text text-danger">{errors.accountName}</small>}
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="category" >Category</label>
-                            <input 
-                                className="form-control"
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formCategory">
+                            <Form.Label>Category</Form.Label>
+                            <Form.Control 
                                 id="category"
                                 name="category"
                                 type="text" 
@@ -77,10 +76,10 @@ const AccountForm = () => {
                                 onBlur={handleBlur}
                             />
                             {touched.category && errors.category && <small class="form-text text-danger">{errors.category}</small>}
-                        </div>
-                        <button type="submit" className="btn btn-primary mt-3" >Save</button>
+                        </Form.Group>
+                        <Button type="submit" variant="primary">Save</Button>
                         {formSent && <p>Form was succesfully sent</p>}
-                    </form>
+                    </Form>
                 )}
             </Formik>
         </FormContainer>
