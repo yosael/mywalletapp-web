@@ -4,17 +4,20 @@ import '../../styles/FormValidation.css';
 import { FormContainer } from '../../template/FormContainer';
 import { Button, Form } from 'react-bootstrap';
 import { ArrowRightCircle } from 'react-bootstrap-icons';
+import { useHistory } from 'react-router-dom';
 
 
 const AccountForm = () => {
 
     const [formSent, setformSent] = useState(false);
+    const history = useHistory();
 
     return (
         <FormContainer>
             <Formik 
                 initialValues={{
                     accountName: "",
+                    currentBalance: 0,
                     type: "",
                     currency: "USD"
                 }}
@@ -23,6 +26,7 @@ const AccountForm = () => {
                     console.log(values);
                     setformSent(true);
                     setTimeout(()=> setformSent(false),3000);
+                    history.push("/accounts");
 
                 }}
                 validate={(valuesToValidate)=>{
@@ -36,8 +40,12 @@ const AccountForm = () => {
                         errors.accountName = "Account Name only can have characters and spaces between 1 and 40 characters";
                     }
 
+                    if(!valuesToValidate.currentBalance || valuesToValidate.currentBalance<=0){
+                        errors.currentBalance = "Please Enter Current Balance";
+                    }
+
                     // validate category
-                    if(!valuesToValidate.type){
+                    if(!valuesToValidate.type || valuesToValidate.type == "Select Type"){
                         errors.type ="Please enter the type";
                     }
 
@@ -53,8 +61,8 @@ const AccountForm = () => {
              >
                 {({handleSubmit, values, handleChange, errors, handleBlur,touched}) => (
                     <Form onSubmit={handleSubmit} >
-                        <Form.Group className="mb-3" controlId="formAccountName" >
-                            <Form.Label>Account Name</Form.Label>
+                        <Form.Group className="mb-3" >
+                            <Form.Label htmlFor="accountName" >Account Name</Form.Label>
                             <Form.Control 
                                 id="accountName"
                                 name="accountName"
@@ -67,21 +75,38 @@ const AccountForm = () => {
                             />
                             {touched.accountName && errors.accountName && <small id="accountNameMessage" class="form-text text-danger">{errors.accountName}</small>}
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formType">
-                            <Form.Label>Type</Form.Label>
+                        <Form.Group className="mb-3" >
+                            <Form.Label htmlFor="currentBalance" >Current Balance</Form.Label>
                             <Form.Control 
-                                id="type"
-                                name="type"
-                                type="text" 
-                                placeholder="Type" 
-                                value={values.type}
+                                id="currentBalance"
+                                name="currentBalance"
+                                type="number" 
+                                placeholder="Enter Current Balance" 
+                                aria-describedby="currentBalanceMessage"
+                                value={values.currentBalance}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                             />
+                            {touched.currentBalance && errors.currentBalance && <small id="currentBalanceMessage" class="form-text text-danger">{errors.currentBalance}</small>}
+                        </Form.Group>
+                        <Form.Group className="mb-3" >
+                            <Form.Label htmlFor="type" >Type</Form.Label>
+                            <Form.Select aria-label="Select Type"
+                                id="type"
+                                name="type"
+                                value={values.type}
+                                onChange={handleChange}
+                            >
+                                <option>Select Type</option>
+                                <option value="general">General</option>
+                                <option value="cash">Cash</option>
+                                <option value="savingAccount">Saving Account</option>
+                                <option value="bonus">Bonus</option>
+                            </Form.Select>
                             {touched.type && errors.type && <small class="form-text text-danger">{errors.type}</small>}
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formCurrency">
-                            <Form.Label>Currency</Form.Label>
+                        <Form.Group className="mb-3" >
+                            <Form.Label htmlFor="currency" >Currency</Form.Label>
                             <Form.Control 
                                 id="currency"
                                 name="currency"

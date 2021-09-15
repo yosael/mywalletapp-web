@@ -7,9 +7,9 @@ const AccountList = () => {
       <thead>
         <tr>
           <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
+          <th>Account Name</th>
+          <th>Current Balance</th>
+          <th>Type</th>
         </tr>
       </thead>
       <tbody>
