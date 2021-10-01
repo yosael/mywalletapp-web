@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Formik} from 'formik';
 import '../../styles/FormValidation.css';
-import { FormContainer } from '../../template/FormContainer';
+import FormContainer from '../../template/FormContainer';
 import { Button, Form } from 'react-bootstrap';
 import { ArrowRightCircle } from 'react-bootstrap-icons';
 import { useHistory } from 'react-router-dom';

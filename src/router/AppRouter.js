@@ -1,53 +1,28 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import AccountPageList from "../pages/accounts/AccountPageList";
-import AccountPage from "../pages/accounts/AccountPage";
-import Dashboard from "../components/dashboard/Dashboard";
-import Incomes from "../components/transactions/Incomes";
-import Expenses from "../components/transactions/Expenses";
-import Navbar from "../template/Navbar";
+import LoginPage from "../pages/login/LoginPage";
+import RegisterPage from "../pages/register/RegisterPage";
+import MenuRoutes from './MenuRoutes';
+import { PrivateRoutes } from "./PrivateRoutes";
+import { PublicRoutes } from "./PublicRoutes";
+import { useContext } from "react";
+import AuthContext from "../context/auth-context";
 
 const AppRouter = () => {
+  //const user = {logged:false};
+  const { currentUser } = useContext(AuthContext);
+  console.log(currentUser);
   return (
     <Router>
-      <div>
-        {/*<nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/users">Users</Link>
-            </li>
-          </ul>
-        </nav>*/}
-
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
-        <Navbar />
-        <Switch>
-          <Route path="/dashboard">
-            <Dashboard />
-          </Route>
-          <Route path="/accounts">
-            <AccountPageList />
-          </Route>
-          <Route path="/account">
-            <AccountPage />
-          </Route>
-          <Route path="/incomes">
-            <Incomes />
-          </Route>
-          <Route path="/expenses">
-            <Expenses />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+          <div>
+              <Switch>
+                  <PublicRoutes path="/login" component={LoginPage} exact isAuthenticated={currentUser ? true : false }/>
+                  <PublicRoutes path="/register" component={RegisterPage} exact isAuthenticated={currentUser ? true : false}/>
+                  <PrivateRoutes path="/" component={MenuRoutes} isAuthenticated={currentUser ? true : false} />
+              </Switch>
+          </div>
+     </Router>
   );
-};
+}
 
 export default AppRouter;

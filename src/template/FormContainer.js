@@ -1,6 +1,6 @@
 import { Row,Card } from "react-bootstrap"
 
-export const FormContainer = ({children}) => {
+const FormContainer = ({children}) => {
     return (
             <Row >
                 <Card>
@@ -11,3 +11,5 @@ export const FormContainer = ({children}) => {
             </Row>
     )
 }
+
+export default FormContainer;
