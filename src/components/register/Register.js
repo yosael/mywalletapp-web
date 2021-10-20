@@ -2,6 +2,7 @@ import React, { useState, useRef, useContext } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import AuthContext from '../../context/auth-context';
+import { saveUserToDB } from './RegisterService';
 import './register.css';
 
 
@@ -26,7 +27,10 @@ const Register = () => {
 
             setError('');
             setDisabledSubmit(true);
-            await authCtx.register(emailRef.current.value,passwordRef.current.value);
+            const userCredentials = await authCtx.register(emailRef.current.value,passwordRef.current.value);
+            console.log(userCredentials);
+            await saveUserToDB(userCredentials.user.uid,userCredentials.user.email);
+
 
             history.push('/');
 
