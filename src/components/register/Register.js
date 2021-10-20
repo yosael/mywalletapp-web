@@ -2,6 +2,7 @@ import React, { useState, useRef, useContext } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import AuthContext from '../../context/auth-context';
+import './register.css';
 
 
 const Register = () => {
@@ -40,21 +41,23 @@ const Register = () => {
     }
 
     return (
-        <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="formGroupEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" name="email" ref={emailRef} />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" name="password" ref={passwordRef}  />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formGroupPassword">
-                <Form.Label>Confirm Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" name="passwordConfirm" ref={passwordConfirmRef} />
-            </Form.Group>
-            <Button type="submit">Submit form</Button>
-        </Form>
+        <div id="registerContainer">
+            <Form onSubmit={handleSubmit} className="formRegister">
+                <Form.Group className="mb-3" controlId="formGroupEmail">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control type="email" placeholder="Enter email" name="email" ref={emailRef} />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formGroupPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type="password" placeholder="Password" name="password" ref={passwordRef}  />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formGroupPassword">
+                    <Form.Label>Confirm Password</Form.Label>
+                    <Form.Control type="password" placeholder="Password" name="passwordConfirm" ref={passwordConfirmRef} />
+                </Form.Group>
+                <Button type="submit">Create Account</Button>
+            </Form>
+        </div>
     )
 }
 
