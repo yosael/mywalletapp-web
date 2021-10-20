@@ -1,16 +1,21 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {Formik} from 'formik';
 import '../../styles/FormValidation.css';
 import FormContainer from '../../template/FormContainer';
 import { Button, Form } from 'react-bootstrap';
 import { ArrowRightCircle } from 'react-bootstrap-icons';
 import { useHistory } from 'react-router-dom';
+import { AccountTypesOptions } from './AccountTypesOptions';
+import AuthContext from "../../context/auth-context";
+import axiosApi from '../../util/axios';
+import CurrencyOptions from '../currency/CurrencyOptions';
 
 
 const AccountForm = () => {
 
     const [formSent, setformSent] = useState(false);
     const history = useHistory();
+    const authCtx = useContext(AuthContext);
 
     return (
         <FormContainer>
@@ -19,13 +24,24 @@ const AccountForm = () => {
                     accountName: "",
                     currentBalance: 0,
                     type: "",
-                    currency: "USD"
+                    currency: ""
                 }}
-                onSubmit={(values, {resetForm})=>{
+                onSubmit={ async (values, {resetForm})=>{
+
                     resetForm();
                     console.log(values);
-                    setformSent(true);
-                    setTimeout(()=> setformSent(false),3000);
+                    /*setformSent(true);
+                    setTimeout(()=> setformSent(false),3000);*/
+
+                    await axiosApi.post('/account',{
+                        accountTypeId: parseInt(values.type),
+                        currencyId: parseInt(values.currency),
+                        userId: authCtx.currentUser.uid,
+                        accountName: values.accountName,
+                        currentBalance: values.currentBalance
+                    })
+
+
                     history.push("/accounts");
 
                 }}
@@ -47,6 +63,10 @@ const AccountForm = () => {
                     // validate category
                     if(!valuesToValidate.type || valuesToValidate.type == "Select Type"){
                         errors.type ="Please enter the type";
+                    }
+
+                    if(!valuesToValidate.currency || valuesToValidate.currency == "Select Currency"){
+                        errors.currency ="Please enter the currency";
                     }
 
                     //validate email example
@@ -97,26 +117,20 @@ const AccountForm = () => {
                                 value={values.type}
                                 onChange={handleChange}
                             >
-                                <option>Select Type</option>
-                                <option value="general">General</option>
-                                <option value="cash">Cash</option>
-                                <option value="savingAccount">Saving Account</option>
-                                <option value="bonus">Bonus</option>
+                                <AccountTypesOptions />
                             </Form.Select>
                             {touched.type && errors.type && <small class="form-text text-danger">{errors.type}</small>}
                         </Form.Group>
                         <Form.Group className="mb-3" >
                             <Form.Label htmlFor="currency" >Currency</Form.Label>
-                            <Form.Control 
+                            <Form.Select aria-label="Select Currency"
                                 id="currency"
                                 name="currency"
-                                type="text" 
-                                placeholder="currency" 
-                                readOnly
                                 value={values.currency}
                                 onChange={handleChange}
-                                onBlur={handleBlur}
-                            />
+                            >
+                                <CurrencyOptions />
+                            </Form.Select>
                             {touched.currency && errors.currency && <small class="form-text text-danger">{errors.currency}</small>}
                         </Form.Group>
                         <Button type="submit" variant="primary" >Save
