@@ -22,7 +22,6 @@ const CategoryOptions = () => {
 
     return (
         <>
-            <option>Select Category</option>
             {
                 categories &&
                 categories.map( (item) => 

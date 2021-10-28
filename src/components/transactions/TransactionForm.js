@@ -4,7 +4,9 @@ import { Button, Col, Form, Row } from 'react-bootstrap';
 import { ArrowRightCircle } from 'react-bootstrap-icons';
 import { useHistory } from 'react-router-dom';
 import FormContainer from '../../template/FormContainer';
+import AccountOptions from '../accounts/AccountListOptions';
 import CategoryOptions from '../category/CategoryOptions';
+import CurrencyOptions from '../currency/CurrencyOptions';
 
 const TransactionForm = () => {
 
@@ -98,10 +100,7 @@ const TransactionForm = () => {
                                     onChange={handleChange}
                                 >
                                     <option>Select Account</option>
-                                    <option value="general">General</option>
-                                    <option value="cash">Cash</option>
-                                    <option value="savingAccount">Saving Account</option>
-                                    <option value="bonus">Bonus</option>
+                                    <AccountOptions />
                                 </Form.Select>
                                 {touched.account && errors.account && <small class="form-text text-danger">{errors.account}</small>}
                         </Form.Group>
@@ -160,8 +159,15 @@ const TransactionForm = () => {
                             </Form.Group>
 
                             <Form.Group as={Col} className="col-sm-2 mb-3" >
-                                <Form.Label>Currency</Form.Label>
-                                <Form.Control type="text" placeholder="Enter email" value={values.currency}  readOnly/>
+                                <Form.Label htmlFor="currency" >Currency</Form.Label>
+                                <Form.Select aria-label="Select Currency"
+                                    id="currency"
+                                    name="currency"
+                                    value={values.currency}
+                                    onChange={handleChange}
+                                >
+                                    <CurrencyOptions />
+                                </Form.Select>
                             </Form.Group>
                         </Row>
                         <Button type="submit" variant="primary" >Save
