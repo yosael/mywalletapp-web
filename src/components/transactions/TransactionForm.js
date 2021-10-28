@@ -4,6 +4,7 @@ import { Button, Col, Form, Row } from 'react-bootstrap';
 import { ArrowRightCircle } from 'react-bootstrap-icons';
 import { useHistory } from 'react-router-dom';
 import FormContainer from '../../template/FormContainer';
+import CategoryOptions from '../category/CategoryOptions';
 
 const TransactionForm = () => {
 
@@ -132,10 +133,7 @@ const TransactionForm = () => {
                                         onChange={handleChange}
                                     >
                                         <option>Select Category</option>
-                                        <option value="general">General</option>
-                                        <option value="cash">Cash</option>
-                                        <option value="savingAccount">Saving Account</option>
-                                        <option value="bonus">Bonus</option>
+                                        <CategoryOptions />
                                     </Form.Select>
                                     {touched.category && errors.category && <small class="form-text text-danger">{errors.category}</small>}
                             </Form.Group>
