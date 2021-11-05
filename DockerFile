@@ -1,0 +1,18 @@
+# BUILD
+# docker build -t mywalletapp-web:1.0.0 -f DockerFile .
+# RUN
+# docker run -p 80:80 -d mywalletapp-web:1.0.0
+
+FROM node:14.18.0 as compilation
+
+COPY . /opt/mywalletapp-web
+
+WORKDIR /opt/mywalletapp-web
+
+RUN npm install
+
+RUN npm run build
+
+FROM nginx:1.21.3
+
+COPY --from=compilation /opt/mywalletapp-web/build /usr/share/nginx/html
