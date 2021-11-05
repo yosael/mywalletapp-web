@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import React from 'react'
+import React,{ useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { ArrowRightCircle } from 'react-bootstrap-icons';
 import { useHistory } from 'react-router-dom';
@@ -7,26 +7,46 @@ import FormContainer from '../../template/FormContainer';
 import AccountOptions from '../accounts/AccountListOptions';
 import CategoryOptions from '../category/CategoryOptions';
 import CurrencyOptions from '../currency/CurrencyOptions';
+import axiosApi from '../../util/axios';
+import { saveIncome, saveExpense, saveTransfer } from './TransactionService';
 
 const TransactionForm = () => {
 
     const history = useHistory();
+    const [transactionTypeFlag, setTransactionTypeFlag] = useState('income');
 
     return (
         <FormContainer>
             <Formik
             initialValues={{
-                transactionType: "",
+                transactionType: "income",
                 account: "",
                 amount: 0,
                 currency: "USD",
                 category: "",
-                note: ""
+                note: "",
+                accountFrom: "",
+                accountTo: ""
 
             }}
-            onSubmit={(values, {resetForm})=>{
+            onSubmit={ async (values, {resetForm})=>{
                 resetForm();
                 console.log(values);
+
+                try {
+
+                    if(transactionTypeFlag === "income")
+                        await saveIncome(parseInt(values.account),parseInt(values.category),parseInt(values.currency),values.amount,values.note);
+                    else if(transactionTypeFlag === "expense")
+                        await saveExpense(parseInt(values.account),parseInt(values.category),parseInt(values.currency),values.amount,values.note);
+                    else if(transactionTypeFlag === "transfer")
+                        await saveTransfer(parseInt(values.accountFrom),parseInt(values.accountTo),parseInt(values.currency),values.amount,values.note);
+
+                } catch (error) {
+                    console.log(error);
+                }
+            
+
                 history.push("/transactions");
 
             }}
@@ -35,7 +55,7 @@ const TransactionForm = () => {
                 let errors = {};
 
                 //validate name
-                if(!valuesToValidate.account){
+                if(!valuesToValidate.account && transactionTypeFlag!='transfer'){
                     errors.account = "Account is required";
                 }
                 /*else if(!/^[a-zA-Z\s]{1,40}$/.test(valuesToValidate.accountName)){
@@ -51,7 +71,7 @@ const TransactionForm = () => {
                     errors.type ="Please enter the type";
                 }*/
 
-                if(!valuesToValidate.category || valuesToValidate.category == "Select Category"){
+                if((!valuesToValidate.category || valuesToValidate.category == "Select Category") && transactionTypeFlag!='transfer'){
                     errors.category ="Please enter the category";
                 }
 
@@ -75,13 +95,15 @@ const TransactionForm = () => {
                                 name="transactionType"
                                 type="radio"
                                 value="income"
+                                onChange={handleChange, ()=> setTransactionTypeFlag('income')}
                             />
                             <Form.Check
                                 inline
-                                label="Outcome"
+                                label="Expense"
                                 name="transactionType"
                                 type="radio"
-                                value="outcome"
+                                value="expense"
+                                onChange={handleChange,()=> setTransactionTypeFlag('expense')}
                             />
                             <Form.Check
                                 inline
@@ -89,21 +111,59 @@ const TransactionForm = () => {
                                 name="transactionType"
                                 type="radio"
                                 value="transfer"
+                                onChange={handleChange,()=> setTransactionTypeFlag('transfer')}
                             />
                         </div>
-                        <Form.Group className="mb-3" >
-                                <Form.Label htmlFor="account" >Select Account</Form.Label>
-                                <Form.Select aria-label="Select"
-                                    id="account"
-                                    name="account"
-                                    value={values.account}
-                                    onChange={handleChange}
-                                >
-                                    <option>Select Account</option>
-                                    <AccountOptions />
-                                </Form.Select>
-                                {touched.account && errors.account && <small class="form-text text-danger">{errors.account}</small>}
-                        </Form.Group>
+                        {
+                            transactionTypeFlag!='transfer' &&
+                            <Form.Group className="mb-3" >
+                                    <Form.Label htmlFor="account" >Select Account</Form.Label>
+                                    <Form.Select aria-label="Select"
+                                        id="account"
+                                        name="account"
+                                        value={values.account}
+                                        onChange={handleChange}
+                                    >
+                                        <option>Select Account</option>
+                                        <AccountOptions />
+                                    </Form.Select>
+                                    {touched.account && errors.account && <small class="form-text text-danger">{errors.account}</small>}
+                            </Form.Group>
+
+
+                        }
+                        {
+                            transactionTypeFlag == 'transfer' &&
+                            <Row className="mb-3">
+                                <Form.Group as={Col} className="mb-3" >
+                                        <Form.Label htmlFor="accountFrom" >Select Account From</Form.Label>
+                                        <Form.Select aria-label="Select"
+                                            id="accountFrom"
+                                            name="accountFrom"
+                                            value={values.accountFrom}
+                                            onChange={handleChange}
+                                        >
+                                            <option>Select Account</option>
+                                            <AccountOptions />
+                                        </Form.Select>
+                                        {touched.accountFrom && errors.accountFrom && <small class="form-text text-danger">{errors.accountFrom}</small>}
+                                </Form.Group>
+                                <Form.Group as={Col} className="mb-3" >
+                                        <Form.Label htmlFor="accountTo" >Select Account To</Form.Label>
+                                        <Form.Select aria-label="Select"
+                                            id="accountTo"
+                                            name="accountTo"
+                                            value={values.accountTo}
+                                            onChange={handleChange}
+                                        >
+                                            <option>Select Account</option>
+                                            <AccountOptions />
+                                        </Form.Select>
+                                        {touched.accountTo && errors.accountTo && <small class="form-text text-danger">{errors.accountTo}</small>}
+                                </Form.Group>
+                            </Row>
+
+                        }
                         <Row className="mb-3">
                             <Form.Group as={Col} className="mb-3" >
                                 <Form.Label>Amount</Form.Label>
