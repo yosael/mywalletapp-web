@@ -230,7 +230,7 @@ const TransactionForm = () => {
                                 </Form.Select>
                             </Form.Group>
                         </Row>
-                        <Button type="submit" variant="primary" >Save
+                        <Button type="submit" variant="success" >Save
                             <ArrowRightCircle style={{marginLeft:'3px'}} size={20} />
                         </Button>
                     </Form>

@@ -9,7 +9,7 @@ const TransactionPageList = () => {
     return (
         <PageContainer pageName="Transaction Records">
             <PageOptionsBar>
-                <Link className="btn btn-secondary" to="/transaction" >+ Add</Link>
+                <Link className="btn btn-success" to="/transaction" >+ Add</Link>
             </PageOptionsBar>
             <PageBody>
                 <TransacctionList />

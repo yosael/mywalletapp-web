@@ -43,6 +43,7 @@ const AccountList = () => {
               <td>{item.current_balance}</td>
               <td>{item.account_type_id}</td>
             </tr>
+            
           )
         }
       </tbody>

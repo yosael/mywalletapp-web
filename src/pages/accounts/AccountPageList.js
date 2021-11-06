@@ -11,7 +11,7 @@ const AccountPageList = () => {
     return (
         <PageContainer pageName="Account List">
             <PageOptionsBar>
-                <Link className="btn btn-secondary" to="/account" >New Account</Link>
+                <Link className="btn btn-success" to="/account" >+ Add</Link>
             </PageOptionsBar>
             <PageBody>
                 <AccountList />

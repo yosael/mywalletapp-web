@@ -1,7 +1,11 @@
 import React,{ useContext,useState,useEffect } from "react";
-import { Table } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import AuthContext from "../../context/auth-context";
 import axiosApi from "../../util/axios";
+import './Transactions.css';
+import { FcApproval } from "react-icons/fc";
+import CategoryIcon from "./CategoryIcon";
+
 
 const TransacctionList = ({ title }) => {
 
@@ -28,31 +32,19 @@ const TransacctionList = ({ title }) => {
   }, []);
 
   return (
-    <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>Category</th>
-          <th>Amount</th>
-          <th>Date</th>
-          <th>Type</th>
-        </tr>
-      </thead>
-      <tbody>
-        {
-          transactions &&
-          transactions.map((data)=> 
-            <tr key={data.transaction_id} >
-              <td>{data.category_name}</td>
-              <td>{data.amount}</td>
-              <td>{data.created_date}</td>
-              <td>{data.type}</td>
-            </tr>
-          )
-        }
-        
-      </tbody>
-    </Table>
+    <Container className='listContainer'>
+      {
+        transactions &&
+        transactions.map((data)=> 
+        <Row className='rowItem'>
+          <Col md={1}><CategoryIcon iconType={data.category_name} /></Col>
+          <Col md={4} style={{"fontWeight":"bold"}}>{data.category_name}</Col>
+          <Col md={{ span: 4, offset: 4 }} className={data.type == 'expense' ? 'amountNegative':'amountPositive'} >{data.amount}</Col>
+        </Row>
+        )
+      }
+    </Container>
   );
-};
+}
 
 export default TransacctionList;
