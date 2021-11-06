@@ -1,7 +1,10 @@
 import React,{ useState, useEffect,useContext } from "react";
-import { Table } from "react-bootstrap";
+import { Col, Container, Row, Table } from "react-bootstrap";
 import AuthContext from "../../context/auth-context";
 import axiosApi from '../../util/axios';
+import AccountIconType from "./AccountIconType";
+import { FcBullish } from 'react-icons/fc';
+import './Account.css';
 
 const AccountList = () => {
 
@@ -25,29 +28,19 @@ const AccountList = () => {
   }, []);
 
   return (
-    <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Account Name</th>
-          <th>Current Balance</th>
-          <th>Type</th>
-        </tr>
-      </thead>
-      <tbody>
-        {
-          accounts.map((item)=> 
-            <tr key={item.account_id} >
-              <td>{item.account_id}</td>
-              <td>{item.account_name}</td>
-              <td>{item.current_balance}</td>
-              <td>{item.account_type_id}</td>
-            </tr>
-            
-          )
-        }
-      </tbody>
-    </Table>
+    
+    <Container className='listContainer'>
+      {
+        accounts &&
+        accounts.map((item)=> 
+        <Row className='rowItem'>
+          <Col md={1}><AccountIconType iconType={item.account_type} iconSize={30} /></Col>
+          <Col md={4} style={{"fontWeight":"bold"}}>{'('+item.account_type+') - '+item.account_name}</Col>
+          <Col md={{  offset: 4 }} className="amountPositive" >{item.currency+' '+item.current_balance} <FcBullish /></Col>
+        </Row>
+        )
+      }
+    </Container>
   );
 };
 
