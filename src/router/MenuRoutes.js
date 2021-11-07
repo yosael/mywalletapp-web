@@ -9,6 +9,7 @@ import Navbar from "../template/Navbar";
 import TransactionPageList from "../pages/transactions/TransactionPageList";
 import TransactionPage from "../pages/transactions/TransactionPage";
 import LoginPage from "../pages/login/LoginPage";
+import DashboardPage from "../pages/dashboard/DashboardPage";
 
 const AppRouter = () => {
   return (
@@ -33,7 +34,7 @@ const AppRouter = () => {
         <Navbar />
         <Switch>
           <Route path="/" exact >
-            <Dashboard />
+            <DashboardPage />
           </Route>
           <Route path="/accounts">
             <AccountPageList />
