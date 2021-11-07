@@ -1,6 +1,8 @@
 import React from "react";
 import './Dashboard.css';
+import ExpenseLastDays from "./expense/ExpenseLastDays";
 import ExpenseReport from "./expense/ExpenseReport";
+import CompareReport from "./transactions/CompareReport";
 
 const Dashboard = () => {
   console.log("loading dashboard");
@@ -14,15 +16,15 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="dashItem1Level">
-          <div className="dashItemTitle" >Last Expenses</div>
+          <div className="dashItemTitle" >Expenses Last 30 days</div>
           <div className="dashItemContent">
-            Grafics 2
+            <ExpenseLastDays />
           </div>
         </div>
         <div className="dashItem1Level">
           <div className="dashItemTitle" >Balance</div>
           <div className="dashItemContent">
-            Grafics 3
+            <CompareReport />
           </div>
         </div>
       </div>
