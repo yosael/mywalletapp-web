@@ -27,7 +27,7 @@ const AccountOptions = () => {
             {
                 accounts.map( (item) => 
                     <option value={item.account_id} key={item.account_id} >
-                        {`${item.account_name} - ${item.current_balance}`}
+                        {`${item.account_name} - ${item.currency} ${item.current_balance}`}
                     </option>
                 )
             }

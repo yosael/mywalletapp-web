@@ -3,6 +3,7 @@ import { FcCurrencyExchange,FcMoneyTransfer,FcPieChart,FcSalesPerformance,FcLibr
 
 const AccountIconType = ({iconType,iconSize}) => {;
 
+    console.log("iconType",iconType);
     if(iconType==='General'){
       return  <FcSalesPerformance size={iconSize} />
     }

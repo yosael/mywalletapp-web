@@ -39,7 +39,7 @@ const TransacctionList = ({ title }) => {
         <Row className='rowItem'>
           <Col md={1}><CategoryIcon iconType={data.category_name} /></Col>
           <Col md={4} style={{"fontWeight":"bold"}}>{data.category_name}</Col>
-          <Col md={{ offset: 4 }} className={data.type == 'expense' ? 'amountNegative':'amountPositive'} >{data.amount}</Col>
+          <Col md={{ offset: 4 }} className={data.type == 'expense' ? 'amountNegative':'amountPositive'} >{`${data.currency} ${data.amount}`}</Col>
         </Row>
         )
       }

@@ -1,5 +1,6 @@
 import React,{ useState,useEffect } from 'react';
 import axiosApi from '../../util/axios';
+import AccountIconType from './AccountIconType';
 
 export const AccountTypesOptions = () => {
 
@@ -25,8 +26,8 @@ export const AccountTypesOptions = () => {
             <option>Select Type</option>
             {
                 accountTypes.map( (item) => 
-                    <option value={item.account_id} key={item.account_id} >
-                        {item.description}
+                    <option value={item.account_id} key={item.account_id}  >
+                        { item.description}
                     </option>
                 )
             }
