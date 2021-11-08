@@ -1,6 +1,6 @@
 import axiosApi from '../../util/axios';
 
-export const saveIncome = async (accountId,categoryId,currencyId,amount,note,isoDateTransaction)=>{
+export const saveIncome = async (accountId,categoryId,currencyId,amount,note,isoDateTransaction,transactionTime)=>{
 
     const data = {
         accountId,
@@ -9,7 +9,8 @@ export const saveIncome = async (accountId,categoryId,currencyId,amount,note,iso
         amount,
         note,
         status:'applied',
-        isoDateTransaction
+        isoDateTransaction,
+        transactionTime
     }
     try {
         await axiosApi.post('/income',data);    
@@ -20,7 +21,7 @@ export const saveIncome = async (accountId,categoryId,currencyId,amount,note,iso
     
 }
 
-export const saveExpense = async (accountId,categoryId,currencyId,amount,note,isoDateTransaction)=>{
+export const saveExpense = async (accountId,categoryId,currencyId,amount,note,isoDateTransaction,transactionTime)=>{
 
     const data = {
         accountId,
@@ -29,7 +30,8 @@ export const saveExpense = async (accountId,categoryId,currencyId,amount,note,is
         amount,
         note,
         status:'applied',
-        isoDateTransaction
+        isoDateTransaction,
+        transactionTime
     }
     try {
         await axiosApi.post('/expense',data);    
@@ -40,7 +42,7 @@ export const saveExpense = async (accountId,categoryId,currencyId,amount,note,is
     
 }
 
-export const saveTransfer = async (accountIdFrom,accountIdTo,currencyId,amount,note,isoDateTransaction)=>{
+export const saveTransfer = async (accountIdFrom,accountIdTo,currencyId,amount,note,isoDateTransaction,transactionTime)=>{
 
     const data = {
         accountIdFrom,
@@ -49,7 +51,8 @@ export const saveTransfer = async (accountIdFrom,accountIdTo,currencyId,amount,n
         amount,
         note,
         status:'applied',
-        isoDateTransaction
+        isoDateTransaction,
+        transactionTime
     }
     try {
         await axiosApi.post('/transfer',data);    

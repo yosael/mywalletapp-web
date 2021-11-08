@@ -46,18 +46,18 @@ const TransactionForm = () => {
                 try {
 
                     if(transactionTypeFlag === "income")
-                        await saveIncome(parseInt(values.account),parseInt(values.category),parseInt(values.currency),values.amount,values.note,values.isoDateTransaction);
+                        await saveIncome(parseInt(values.account),parseInt(values.category),parseInt(values.currency),values.amount,values.note,values.isoDateTransaction,values.transactionTime);
                     else if(transactionTypeFlag === "expense")
-                        await saveExpense(parseInt(values.account),parseInt(values.category),parseInt(values.currency),values.amount,values.note,values.isoDateTransaction);
+                        await saveExpense(parseInt(values.account),parseInt(values.category),parseInt(values.currency),values.amount,values.note,values.isoDateTransaction,values.transactionTime);
                     else if(transactionTypeFlag === "transfer")
-                        await saveTransfer(parseInt(values.accountFrom),parseInt(values.accountTo),parseInt(values.currency),values.amount,values.note,values.isoDateTransaction);
+                        await saveTransfer(parseInt(values.accountFrom),parseInt(values.accountTo),parseInt(values.currency),values.amount,values.note,values.isoDateTransaction,values.transactionTime);
 
                 } catch (error) {
                     console.log(error);
                 }
             
 
-                //history.push("/transactions");
+                history.push("/transactions");
 
             }}
 

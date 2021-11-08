@@ -10,7 +10,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f8f9', end
 border-radius: 5px;
 
 overflow-y: scroll;
-height: 700px;
+height: auto;
+max-height: 700px;
 
 
 }
