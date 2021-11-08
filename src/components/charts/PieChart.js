@@ -5,8 +5,10 @@ const PieChart = ({data,options}) => {
     return (
         <>
             {
-                data &&
+                data ?
                 <Pie data={data} options={options} />
+                :
+                <h4>No records</h4>
             }
             
         </>

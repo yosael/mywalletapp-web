@@ -34,14 +34,16 @@ const TransacctionList = ({ title }) => {
   return (
     <Container className='listContainer'>
       {
-        transactions &&
-        transactions.map((data)=> 
-        <Row className='rowItem'>
-          <Col md={1}><CategoryIcon iconType={data.category_name} /></Col>
-          <Col md={4} style={{"fontWeight":"bold"}}>{data.category_name}</Col>
-          <Col md={{ offset: 4 }} className={data.type == 'expense' ? 'amountNegative':'amountPositive'} >{`${data.currency} ${data.amount}`}</Col>
-        </Row>
-        )
+        (transactions && transactions.length>0) ?
+          transactions.map((data)=> 
+          <Row className='rowItem'>
+            <Col md={1}><CategoryIcon iconType={data.category_name} /></Col>
+            <Col md={4} style={{"fontWeight":"bold"}}>{data.category_name}</Col>
+            <Col md={{ offset: 4 }} className={data.type == 'expense' ? 'amountNegative':'amountPositive'} >{`${data.currency} ${data.amount}`}</Col>
+          </Row>
+          )
+        :
+        <h4>No Records</h4>
       }
     </Container>
   );

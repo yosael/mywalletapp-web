@@ -32,15 +32,17 @@ const AccountList = () => {
     
     <Container className='listContainer'>
       {
-        accounts &&
-        accounts.map((item)=> {
-        return (
-        <Row className='rowItem'>
-          <Col md={1}><AccountIconType iconType={item.account_type} iconSize={30} /></Col>
-          <Col md={4} style={{"fontWeight":"bold"}}>{'('+item.account_type+') - '+item.account_name}</Col>
-          <Col md={{  offset: 4 }} className="amountPositive" >{item.currency+' '+item.current_balance} <FcBullish /></Col>
-        </Row>
-        )})
+        (accounts && accounts.length>0) ?
+          accounts.map((item)=> {
+          return (
+          <Row className='rowItem'>
+            <Col md={1}><AccountIconType iconType={item.account_type} iconSize={30} /></Col>
+            <Col md={4} style={{"fontWeight":"bold"}}>{'('+item.account_type+') - '+item.account_name}</Col>
+            <Col md={{  offset: 4 }} className="amountPositive" >{item.currency+' '+item.current_balance} <FcBullish /></Col>
+          </Row>
+          )})
+        :
+        <h4>No Records</h4>
       }
       
 
