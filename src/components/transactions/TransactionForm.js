@@ -57,7 +57,7 @@ const TransactionForm = () => {
                 }
             
 
-                history.push("/transactions");
+                //history.push("/transactions");
 
             }}
 
