@@ -44,8 +44,6 @@ const AccountList = () => {
         :
         <h4>No Records</h4>
       }
-      
-
     </Container>
   );
 };

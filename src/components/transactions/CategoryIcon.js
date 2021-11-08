@@ -1,12 +1,12 @@
 import React from 'react';
-import { FcApproval,FcShop,FcHome,FcShipped,FcAutomotive,FcStart,FcWiFiLogo,FcBullish,FcPhoneAndroid,FcViewDetails } from 'react-icons/fc';
+import { FcApproval,FcShop,FcHome,FcShipped,FcAutomotive,FcStart,FcWiFiLogo,FcBullish,FcPhoneAndroid,FcViewDetails,FcPaid } from 'react-icons/fc';
 
 const CategoryIcon = ({iconType}) => {
 
     const iconSize = 30;
 
     if(iconType==='Food and Drinks'){
-      return  <FcBullish size={iconSize} />
+      return  <FcPaid size={iconSize} />
     }
     else if(iconType==='Housing')
         //return (<div style={{"background":"gray","borderRadius":"50%","width":"50px","height":"50px"}}><FcShop size={30}  /></div>)

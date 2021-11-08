@@ -9,6 +9,11 @@ import CategoryOptions from '../category/CategoryOptions';
 import CurrencyOptions from '../currency/CurrencyOptions';
 import axiosApi from '../../util/axios';
 import { saveIncome, saveExpense, saveTransfer } from './TransactionService';
+//import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment";
+import "moment-timezone";
+import "moment/locale/es";
+//import DatePicker, { registerLocale } from "react-datepicker";
 
 const TransactionForm = () => {
 
@@ -26,21 +31,26 @@ const TransactionForm = () => {
                 category: "",
                 note: "",
                 accountFrom: "",
-                accountTo: ""
+                accountTo: "",
+                transactionDate: new Date(),
+                transactionTime: new Date(),
+                isoDateTransaction: null
 
             }}
             onSubmit={ async (values, {resetForm})=>{
-                resetForm();
+                //resetForm();
+                console.log("new date",values.transactionDate+"T"+values.transactionTime);
+                values.isoDateTransaction = new Date(values.transactionDate+"T"+values.transactionTime);
                 console.log(values);
 
                 try {
 
                     if(transactionTypeFlag === "income")
-                        await saveIncome(parseInt(values.account),parseInt(values.category),parseInt(values.currency),values.amount,values.note);
+                        await saveIncome(parseInt(values.account),parseInt(values.category),parseInt(values.currency),values.amount,values.note,values.isoDateTransaction);
                     else if(transactionTypeFlag === "expense")
-                        await saveExpense(parseInt(values.account),parseInt(values.category),parseInt(values.currency),values.amount,values.note);
+                        await saveExpense(parseInt(values.account),parseInt(values.category),parseInt(values.currency),values.amount,values.note,values.isoDateTransaction);
                     else if(transactionTypeFlag === "transfer")
-                        await saveTransfer(parseInt(values.accountFrom),parseInt(values.accountTo),parseInt(values.currency),values.amount,values.note);
+                        await saveTransfer(parseInt(values.accountFrom),parseInt(values.accountTo),parseInt(values.currency),values.amount,values.note,values.isoDateTransaction);
 
                 } catch (error) {
                     console.log(error);
@@ -201,20 +211,28 @@ const TransactionForm = () => {
                             <Form.Group as={Col} className="mb-3" >
                                 <Form.Label>Date</Form.Label>
                                 <Form.Control 
-                                    type="transactionDate" 
+                                    id="transactionDate"
+                                    name="transactionDate"
+                                    type="date" 
                                     value={values.transactionDate}
                                     onChange={handleChange}
                                     onBlur={handleBlur} 
                                 />
                                 <Form.Text className="text-muted">
-                                    We'll never share your email with anyone else.
+                                    
                                 </Form.Text>
                             </Form.Group>
                             <Form.Group as={Col} className="mb-3" >
                                 <Form.Label>Time</Form.Label>
-                                <Form.Control type="time" value={values.currency}  readOnly/>
+                                <Form.Control 
+                                    id="transactionTime"
+                                    name="transactionTime"
+                                    type="time" 
+                                    value={values.transactionTime}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}   />
                                 <Form.Text className="text-muted">
-                                    We'll never share your email with anyone else.
+                                    
                                 </Form.Text>
                             </Form.Group>
 
