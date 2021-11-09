@@ -35,7 +35,7 @@ const Last5Records = () => {
       <>
         {
           (transactions && transactions.length>0) ?
-          <Container className='listContainer' >
+          <Container className='listContainer2' >
             
             {
               transactions.map((data)=> 

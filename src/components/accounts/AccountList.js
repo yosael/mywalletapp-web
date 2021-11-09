@@ -30,7 +30,7 @@ const AccountList = () => {
 
   return (
     
-    <Container className='listContainer'>
+    <Container className='listContainer2'>
       {
         (accounts && accounts.length>0) ?
           accounts.map((item)=> {

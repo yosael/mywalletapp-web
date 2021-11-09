@@ -42,7 +42,7 @@ const ExchangeRate = () => {
     
 
     return (
-    <Container className='listContainer' >
+    <Container className='listContainer2' >
       
 
       <Row className='rowItem'  >
