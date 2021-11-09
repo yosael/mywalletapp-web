@@ -1,11 +1,11 @@
 import axiosApi from '../../util/axios';
 
-export const saveIncome = async (accountId,categoryId,currencyId,amount,note,isoDateTransaction,transactionTime)=>{
+export const saveIncome = async (accountId,categoryId,currency,amount,note,isoDateTransaction,transactionTime)=>{
 
     const data = {
         accountId,
         categoryId,
-        currencyId,
+        currency,
         amount,
         note,
         status:'applied',
@@ -21,12 +21,12 @@ export const saveIncome = async (accountId,categoryId,currencyId,amount,note,iso
     
 }
 
-export const saveExpense = async (accountId,categoryId,currencyId,amount,note,isoDateTransaction,transactionTime)=>{
+export const saveExpense = async (accountId,categoryId,currency,amount,note,isoDateTransaction,transactionTime)=>{
 
     const data = {
         accountId,
         categoryId,
-        currencyId,
+        currency,
         amount,
         note,
         status:'applied',
@@ -42,12 +42,12 @@ export const saveExpense = async (accountId,categoryId,currencyId,amount,note,is
     
 }
 
-export const saveTransfer = async (accountIdFrom,accountIdTo,currencyId,amount,note,isoDateTransaction,transactionTime)=>{
+export const saveTransfer = async (accountIdFrom,accountIdTo,currency,amount,note,isoDateTransaction,transactionTime)=>{
 
     const data = {
         accountIdFrom,
         accountIdTo,
-        currencyId,
+        currency,
         amount,
         note,
         status:'applied',

@@ -19,6 +19,22 @@ const TransactionForm = () => {
 
     const history = useHistory();
     const [transactionTypeFlag, setTransactionTypeFlag] = useState('income');
+    const [selectedCurrency, setSelectedCurrency] = useState();
+    const [accountValue, setAccountValue] = useState();
+
+    const selectCurrency = (e)=>{
+        console.log("selectedCurrency: ",e);
+        let index = e.nativeEvent.target.selectedIndex;
+        let label = e.nativeEvent.target[index].text;
+        if(e.value!="Select Account"){
+            let subsCurrency =label.split("-")[1].substring(1,4);
+            console.log("currency: ",subsCurrency);
+            setSelectedCurrency(subsCurrency);
+        }
+
+        setAccountValue(e.target.value);
+        
+    }
 
     return (
         <FormContainer>
@@ -41,16 +57,17 @@ const TransactionForm = () => {
                 //resetForm();
                 console.log("new date",values.transactionDate+"T"+values.transactionTime);
                 values.isoDateTransaction = new Date(values.transactionDate+"T"+values.transactionTime);
+                values.currency=selectedCurrency;
                 console.log(values);
 
                 try {
 
                     if(transactionTypeFlag === "income")
-                        await saveIncome(parseInt(values.account),parseInt(values.category),parseInt(values.currency),values.amount,values.note,values.isoDateTransaction,values.transactionTime);
+                        await saveIncome(parseInt(accountValue),parseInt(values.category),values.currency,values.amount,values.note,values.isoDateTransaction,values.transactionTime);
                     else if(transactionTypeFlag === "expense")
-                        await saveExpense(parseInt(values.account),parseInt(values.category),parseInt(values.currency),values.amount,values.note,values.isoDateTransaction,values.transactionTime);
+                        await saveExpense(parseInt(accountValue),parseInt(values.category),values.currency,values.amount,values.note,values.isoDateTransaction,values.transactionTime);
                     else if(transactionTypeFlag === "transfer")
-                        await saveTransfer(parseInt(values.accountFrom),parseInt(values.accountTo),parseInt(values.currency),values.amount,values.note,values.isoDateTransaction,values.transactionTime);
+                        await saveTransfer(parseInt(accountValue),parseInt(values.accountTo),values.currency,values.amount,values.note,values.isoDateTransaction,values.transactionTime);
 
                 } catch (error) {
                     console.log(error);
@@ -65,7 +82,7 @@ const TransactionForm = () => {
                 let errors = {};
 
                 //validate name
-                if(!valuesToValidate.account && transactionTypeFlag!='transfer'){
+                if(!accountValue && transactionTypeFlag!='transfer'){
                     errors.account = "Account is required";
                 }
                 /*else if(!/^[a-zA-Z\s]{1,40}$/.test(valuesToValidate.accountName)){
@@ -131,11 +148,11 @@ const TransactionForm = () => {
                                     <Form.Select aria-label="Select"
                                         id="account"
                                         name="account"
-                                        value={values.account}
-                                        onChange={handleChange}
+                                        value={accountValue}
+                                        onChange={selectCurrency}
                                     >
                                         <option>Select Account</option>
-                                        <AccountOptions />
+                                        <AccountOptions  />
                                     </Form.Select>
                                     {touched.account && errors.account && <small class="form-text text-danger">{errors.account}</small>}
                             </Form.Group>
@@ -150,11 +167,11 @@ const TransactionForm = () => {
                                         <Form.Select aria-label="Select"
                                             id="accountFrom"
                                             name="accountFrom"
-                                            value={values.accountFrom}
-                                            onChange={handleChange}
+                                            value={accountValue}
+                                            onChange={selectCurrency}
                                         >
                                             <option>Select Account</option>
-                                            <AccountOptions />
+                                            <AccountOptions  />
                                         </Form.Select>
                                         {touched.accountFrom && errors.accountFrom && <small class="form-text text-danger">{errors.accountFrom}</small>}
                                 </Form.Group>
@@ -193,6 +210,8 @@ const TransactionForm = () => {
                                     </Form.Text>
                                 }
                             </Form.Group>
+                        {
+                            (transactionTypeFlag != 'transfer') &&
                             <Form.Group as={Col} className="mb-3" >
                                     <Form.Label htmlFor="category" >Category</Form.Label>
                                     <Form.Select aria-label="Select"
@@ -206,6 +225,8 @@ const TransactionForm = () => {
                                     </Form.Select>
                                     {touched.category && errors.category && <small class="form-text text-danger">{errors.category}</small>}
                             </Form.Group>
+                        }
+
                         </Row>
                         <Row className="mb-3">
                             <Form.Group as={Col} className="mb-3" >
@@ -236,17 +257,22 @@ const TransactionForm = () => {
                                 </Form.Text>
                             </Form.Group>
 
-                            <Form.Group as={Col} className="col-sm-2 mb-3" >
-                                <Form.Label htmlFor="currency" >Currency</Form.Label>
-                                <Form.Select aria-label="Select Currency"
-                                    id="currency"
-                                    name="currency"
-                                    value={values.currency}
-                                    onChange={handleChange}
-                                >
-                                    <CurrencyOptions />
-                                </Form.Select>
-                            </Form.Group>
+                            {
+                                /*(transactionTypeFlag != 'transfer') &&
+                                <Form.Group as={Col} className="col-sm-2 mb-3" >
+                                    <Form.Label htmlFor="currency" >Currency</Form.Label>
+                                    <Form.Select aria-label="Select Currency"
+                                        id="currency"
+                                        name="currency"
+                                        value={selectedCurrency.currencyId}
+                                        onChange={handleChange}
+                                        readOnly
+                                    >
+                                        <CurrencyOptions />
+                                    </Form.Select>
+                                </Form.Group>
+                                */
+                            }
                         </Row>
                         <Button type="submit" variant="success" >Save
                             <ArrowRightCircle style={{marginLeft:'3px'}} size={20} />
